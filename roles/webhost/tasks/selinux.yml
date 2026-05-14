@@ -1,31 +1,21 @@
 ---
-- name: Allow httpd to bind the custom port (SELinux)
-  community.general.seport:
-    ports: "{{ vhost_port }}"
-    proto: tcp
-    setype: http_port_t
-    state: present
-
-- name: Persist SELinux file context for HTML directory
-  community.general.sefcontext:
-    target: "{{ site_html_dir }}(/.*)?"
-    setype: httpd_sys_content_t
-    state: present
-
-- name: Persist SELinux file context for logs directory
-  community.general.sefcontext:
-    target: "{{ site_logs_dir }}(/.*)?"
-    setype: httpd_log_t
-    state: present
-
-- name: Apply httpd_sys_content_t to HTML directory
-  ansible.builtin.file:
-    path: "{{ site_html_dir }}"
-    setype: httpd_sys_content_t
-    recurse: true
-
-- name: Apply httpd_log_t to logs directory
-  ansible.builtin.file:
-    path: "{{ site_logs_dir }}"
-    setype: httpd_log_t
-    recurse: true
+- name: Configure SELinux ports and file contexts persistently
+  ansible.builtin.include_role:
+    name: redhat.rhel_system_roles.selinux
+  vars:
+    selinux_ports:
+      - ports: "{{ vhost_port | string }}"
+        proto: tcp
+        setype: http_port_t
+        state: present
+        local: true
+    selinux_fcontexts:
+      - target: "{{ site_html_dir }}(/.*)?"
+        setype: httpd_sys_content_t
+        state: present
+      - target: "{{ site_logs_dir }}(/.*)?"
+        setype: httpd_log_t
+        state: present
+    selinux_restore_dirs:
+      - "{{ site_html_dir }}"
+      - "{{ site_logs_dir }}"
