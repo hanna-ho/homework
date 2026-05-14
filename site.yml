@@ -1,0 +1,6 @@
+---
+- name: Configure student14 web host
+  hosts: all
+  become: true
+  roles:
+    - webhost

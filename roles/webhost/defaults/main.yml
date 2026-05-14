@@ -1,0 +1,41 @@
+---
+# --- User / groups ---
+web_user: noemi14
+web_user_uid: 1214
+web_user_primary_group: noemi98
+web_user_groups:
+  - students
+  - web14
+web_user_home: /opt/noemi14
+web_user_shell: /bin/sh
+
+# --- Packages ---
+web_packages:
+  - httpd
+  - firewalld
+  - policycoreutils-python-utils
+
+# --- Site paths ---
+site_base: /srv/noemi14/site
+site_html_dir: "{{ site_base }}/html"
+site_logs_dir: "{{ site_base }}/logs"
+site_access_log: "{{ site_logs_dir }}/access.log"
+site_error_log: "{{ site_logs_dir }}/error.log"
+
+# --- Virtual host ---
+vhost_server_name: student14.internal
+vhost_port: 8140
+vhost_conf_file: /etc/httpd/conf.d/student14.conf
+
+# --- Firewall ---
+allowed_source_network: 192.168.122.0/24
+
+# --- Services ---
+web_service_name: httpd
+firewall_service_name: firewalld
+
+# --- Web pages deployed from files/ ---
+web_pages:
+  - index.html
+  - about.html
+  - contact.html

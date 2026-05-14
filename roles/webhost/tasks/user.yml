@@ -1,0 +1,23 @@
+---
+- name: Ensure primary group exists
+  ansible.builtin.group:
+    name: "{{ web_user_primary_group }}"
+    state: present
+
+- name: Ensure supplementary groups exist
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ web_user_groups }}"
+
+- name: Ensure user exists with required attributes
+  ansible.builtin.user:
+    name: "{{ web_user }}"
+    uid: "{{ web_user_uid }}"
+    group: "{{ web_user_primary_group }}"
+    groups: "{{ web_user_groups }}"
+    append: false
+    home: "{{ web_user_home }}"
+    shell: "{{ web_user_shell }}"
+    create_home: true
+    state: present
