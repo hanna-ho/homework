@@ -14,6 +14,7 @@ web_packages:
   - httpd
   - firewalld
   - policycoreutils-python-utils
+  - python3-libselinux
 
 # --- Site paths ---
 site_base: /srv/noemi14/site
@@ -22,6 +23,11 @@ site_logs_dir: "{{ site_base }}/logs"
 site_access_log: "{{ site_logs_dir }}/access.log"
 site_error_log: "{{ site_logs_dir }}/error.log"
 
+# --- SELinux types ---
+selinux_html_type: httpd_sys_content_t
+selinux_logs_type: httpd_log_t
+selinux_port_type: http_port_t
+
 # --- Virtual host ---
 vhost_server_name: student14.internal
 vhost_port: 8140
@@ -29,10 +35,10 @@ vhost_conf_file: /etc/httpd/conf.d/student14.conf
 
 # --- Firewall ---
 allowed_source_network: 192.168.122.0/24
-
-# --- Services ---
-web_service_name: httpd
 firewall_service_name: firewalld
+
+# --- Web service ---
+web_service_name: httpd
 
 # --- Web pages deployed from files/ ---
 web_pages:

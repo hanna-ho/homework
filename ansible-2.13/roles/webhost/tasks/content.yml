@@ -6,4 +6,5 @@
     owner: "{{ web_user }}"
     group: "{{ web_user_primary_group }}"
     mode: '0644'
+    setype: "{{ selinux_html_type }}"
   loop: "{{ web_pages }}"

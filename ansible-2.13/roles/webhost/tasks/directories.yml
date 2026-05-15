@@ -1,12 +1,15 @@
 ---
-- name: Ensure site directory tree exists
+- name: Ensure site directory tree exists with correct SELinux types
   ansible.builtin.file:
-    path: "{{ item }}"
+    path: "{{ item.path }}"
     state: directory
     owner: "{{ web_user }}"
     group: "{{ web_user_primary_group }}"
     mode: '0755'
+    setype: "{{ item.setype | default(omit) }}"
   loop:
-    - "{{ site_base }}"
-    - "{{ site_html_dir }}"
-    - "{{ site_logs_dir }}"
+    - path: "{{ site_base }}"
+    - path: "{{ site_html_dir }}"
+      setype: "{{ selinux_html_type }}"
+    - path: "{{ site_logs_dir }}"
+      setype: "{{ selinux_logs_type }}"
