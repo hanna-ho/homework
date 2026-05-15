@@ -1,0 +1,21 @@
+---
+- name: Configure SELinux ports and file contexts persistently
+  ansible.builtin.include_role:
+    name: redhat.rhel_system_roles.selinux
+  vars:
+    selinux_ports:
+      - ports: "{{ vhost_port | string }}"
+        proto: tcp
+        setype: http_port_t
+        state: present
+        local: true
+    selinux_fcontexts:
+      - target: "{{ site_html_dir }}(/.*)?"
+        setype: httpd_sys_content_t
+        state: present
+      - target: "{{ site_logs_dir }}(/.*)?"
+        setype: httpd_log_t
+        state: present
+    selinux_restore_dirs:
+      - "{{ site_html_dir }}"
+      - "{{ site_logs_dir }}"

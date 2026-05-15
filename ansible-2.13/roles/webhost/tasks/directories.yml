@@ -1,0 +1,12 @@
+---
+- name: Ensure site directory tree exists
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ web_user }}"
+    group: "{{ web_user_primary_group }}"
+    mode: '0755'
+  loop:
+    - "{{ site_base }}"
+    - "{{ site_html_dir }}"
+    - "{{ site_logs_dir }}"

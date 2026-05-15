@@ -1,0 +1,10 @@
+---
+- name: Configure firewalld rich rule for the vhost port
+  ansible.builtin.include_role:
+    name: redhat.rhel_system_roles.firewall
+  vars:
+    firewall:
+      - rich_rule: "rule family=ipv4 source address={{ allowed_source_network }} port port={{ vhost_port }} protocol=tcp accept"
+        state: enabled
+        permanent: true
+        runtime: true

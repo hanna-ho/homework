@@ -1,0 +1,24 @@
+---
+- name: Install required packages
+  ansible.builtin.import_tasks: packages.yml
+
+- name: Manage user and groups
+  ansible.builtin.import_tasks: user.yml
+
+- name: Create site directories
+  ansible.builtin.import_tasks: directories.yml
+
+- name: Deploy web content
+  ansible.builtin.import_tasks: content.yml
+
+- name: Configure Apache virtual host
+  ansible.builtin.import_tasks: vhost.yml
+
+- name: Configure SELinux
+  ansible.builtin.import_tasks: selinux.yml
+
+- name: Configure firewalld
+  ansible.builtin.import_tasks: firewall.yml
+
+- name: Ensure services are running
+  ansible.builtin.import_tasks: services.yml

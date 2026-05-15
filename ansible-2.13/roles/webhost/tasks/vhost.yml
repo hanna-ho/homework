@@ -1,0 +1,9 @@
+---
+- name: Deploy virtual host configuration
+  ansible.builtin.template:
+    src: vhost.conf.j2
+    dest: "{{ vhost_conf_file }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart httpd

@@ -1,0 +1,15 @@
+Listen {{ vhost_port }}
+
+<VirtualHost *:{{ vhost_port }}>
+    ServerName {{ vhost_server_name }}
+    DocumentRoot {{ site_html_dir }}
+
+    ErrorLog  {{ site_error_log }}
+    CustomLog {{ site_access_log }} combined
+
+    <Directory {{ site_html_dir }}>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+</VirtualHost>

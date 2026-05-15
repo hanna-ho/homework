@@ -1,0 +1,9 @@
+---
+- name: Deploy static web pages
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ site_html_dir }}/{{ item }}"
+    owner: "{{ web_user }}"
+    group: "{{ web_user_primary_group }}"
+    mode: '0644'
+  loop: "{{ web_pages }}"
