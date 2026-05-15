@@ -1,6 +1,4 @@
 ---
 collections:
-  - name: ansible.posix
-    version: "1.5.4"
-  - name: community.general
-    version: "6.6.0"
+  - name: https://galaxy.ansible.com/api/v3/plugin/ansible/content/published/collections/artifacts/ansible-posix-1.5.4.tar.gz
+  - name: https://galaxy.ansible.com/api/v3/plugin/ansible/content/published/collections/artifacts/community-general-6.6.0.tar.gz
